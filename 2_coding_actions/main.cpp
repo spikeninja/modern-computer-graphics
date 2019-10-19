@@ -14,6 +14,7 @@
 
 
 const GLint WIDTH = 800, HEIGHT = 600;
+const float toRadians = 3.14159265f / 180.0f;
 
 GLuint VAO, VBO, shader, uniformModel;
 
@@ -22,6 +23,8 @@ float triOffset = 0.0f;
 float triMaxOffset = 0.7f;
 float triIncrement = 0.005f;
 
+float curAngle = 0.0f;
+
 // Vertex shader
 static const char* vShader = "     \n\
 #version 330                       \n\
@@ -29,7 +32,7 @@ layout (location=0) in vec3 pos;   \n\
                                     \n\
 uniform mat4 model;                 \n\
 void main(){                       \n\
-  gl_Position = model * vec4(0.4*pos.x, 0.4*pos.y, pos.z, 1.0);\n\
+  gl_Position = model * vec4(pos.x, pos.y, pos.z, 1.0);\n\
 } " ; 
 
 
@@ -197,6 +200,10 @@ int main(){
       direction = !direction;
     }
     
+    curAngle += 0.001f;
+    if(curAngle >= 360){
+      curAngle -= 360;
+    }
     // Clear window
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
@@ -207,6 +214,7 @@ int main(){
 
     glm::mat4 model = glm::mat4(1.0);  
     //std::cout << glm::to_string(model) << std::endl;
+    model = glm::rotate(model, 90*toRadians, glm::vec3(0.0f, 0.0f, 1.0f));
     model = glm::translate(model, glm::vec3(triOffset, 0.0f, 0.0f));
 
     glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
