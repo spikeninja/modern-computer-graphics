@@ -32,7 +32,7 @@ layout (location=0) in vec3 pos;   \n\
                                     \n\
 uniform mat4 model;                 \n\
 void main(){                       \n\
-  gl_Position = model * vec4(pos.x, pos.y, pos.z, 1.0);\n\
+  gl_Position = model * vec4(0.4*pos.x, 0.4*pos.y, pos.z, 1.0);\n\
 } " ; 
 
 
@@ -200,7 +200,7 @@ int main(){
       direction = !direction;
     }
     
-    curAngle += 0.001f;
+    curAngle += 1.0f;
     if(curAngle >= 360){
       curAngle -= 360;
     }
@@ -214,7 +214,7 @@ int main(){
 
     glm::mat4 model = glm::mat4(1.0);  
     //std::cout << glm::to_string(model) << std::endl;
-    model = glm::rotate(model, 90*toRadians, glm::vec3(0.0f, 0.0f, 1.0f));
+    model = glm::rotate(model, curAngle*toRadians, glm::vec3(0.0f, 0.0f, 1.0f));
     model = glm::translate(model, glm::vec3(triOffset, 0.0f, 0.0f));
 
     glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
