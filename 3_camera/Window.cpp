@@ -74,8 +74,20 @@ int Window::Initialise(){
 
 void Window::createCallbacks(){
   glfwSetKeyCallback(mainWindow, handleKeys);
+  glfwSetCursorPosCallback(mainWindow, handleMouse);
 }
 
+GLfloat Window::getXChange(){
+  GLfloat theChange = xChange;
+  xChange = 0.0f;
+  return theChange;
+}
+
+GLfloat Window::getYChange(){
+  GLfloat theChange = yChange;
+  yChange = 0.0f;
+  return theChange;
+}
 
 void Window::handleKeys(GLFWwindow* window, int key, int code, int action, int mode){
   
@@ -96,6 +108,26 @@ void Window::handleKeys(GLFWwindow* window, int key, int code, int action, int m
     }
 
   }
+
+}
+
+void Window::handleMouse(GLFWwindow* window, double xPos, double yPos){
+// we can get access to the window 
+  Window* theWindow = static_cast<Window*>(glfwGetWindowUserPointer(window));
+
+if(theWindow->mouseFirstMoved){
+  theWindow->lastX = xPos;
+  theWindow->lastY = yPos;
+  theWindow->mouseFirstMoved = false;
+}
+
+theWindow->xChange = xPos - theWindow->lastX;
+theWindow->yChange = theWindow->lastY - yPos;
+
+theWindow->lastX = xPos;
+theWindow->lastY = yPos;
+
+printf("x:%.6f, y:%.6f\n", theWindow->xChange, theWindow->yChange);
 
 }
 

@@ -109,4 +109,5 @@ void Shader::compileShaders(const char* vShaderCode, const char* fShaderCode)
 
 	uniformModel = glGetUniformLocation(shader, "model");
 	uniformProjection = glGetUniformLocation(shader, "projection");
+  uniformView = glGetUniformLocation(shader, "view");
 }
