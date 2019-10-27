@@ -75,6 +75,7 @@ int Window::Initialise(){
 void Window::createCallbacks(){
   glfwSetKeyCallback(mainWindow, handleKeys);
   glfwSetCursorPosCallback(mainWindow, handleMouse);
+  glfwSetWindowSizeCallback(mainWindow, windowSizeCallback);
 }
 
 GLfloat Window::getXChange(){
@@ -130,6 +131,13 @@ theWindow->lastY = yPos;
 printf("x:%.6f, y:%.6f\n", theWindow->xChange, theWindow->yChange);
 
 }
+
+void Window::windowSizeCallback(GLFWwindow* window, GLint width, GLint height){
+  
+  glViewport(0,0,width,height);
+
+}
+
 
 Window::~Window(){
   glfwDestroyWindow(mainWindow);

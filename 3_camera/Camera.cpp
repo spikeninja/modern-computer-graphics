@@ -41,7 +41,7 @@ void Camera::mouseControl(GLfloat xChange, GLfloat yChange){
   xChange *= turnSpeed;
   yChange *= turnSpeed;
 
-  yaw *= xChange;
+  yaw += xChange;
   pitch += yChange;
 
   if(pitch > 89.0f){
